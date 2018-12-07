@@ -87,3 +87,35 @@ function orderAlphabetically (movies) {
 }
 
 // Best yearly rate average
+
+function bestYearAvg (movies) {
+ // MUY IMPORTANTE: Ver moviesByYear[movie.year] como crear keys de objeto!
+  let moviesByYear = {}
+  let max = 0;
+  let yearMAx = '';
+   // Recorremos el array, creamos la key con el AÑO numérico de la pelicula y guardamos los rates de ese año en el array del mismo.
+    movies.forEach(function(movie) {
+      if (moviesByYear[movie.year] === undefined) {
+        moviesByYear[movie.year] = []; // Repasar esto, como crear objetos en array. Entre los primeros [] se crea la key del objeto.
+        moviesByYear[movie.year].push(parseFloat(movie.rate));
+      } else {
+        moviesByYear[movie.year].push(parseFloat(movie.rate));
+      }
+    });
+
+    for (let year in moviesByYear) { // Recorrer objeto.
+      let sumOfRates = moviesByYear[year].reduce(function(acc, rate) {
+        return acc + rate;
+      });
+      let avg = sumOfRates / moviesByYear[year].length;
+      moviesByYear[year] = avg;
+      if (max < moviesByYear[year]) {
+        max = moviesByYear[year];
+        yearMAx = year;
+      }
+    }
+  return {
+    rate: max, 
+    year: yearMAx
+  }
+}
